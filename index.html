@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barigbue-Task 1</title>
+  </head>
+  <body>
+    <h1>Barigbue - Task 1</h1>
+    <div id="results"></div>
+    <script>
+      // Input
+      let data = [
+        {
+          page_id: 6682420,
+          creation_date: "2021-09-13",
+          title: "André Baniwa",
+        },
+        {
+          page_id: 4246775,
+          creation_date: "2013-12-10",
+          title: "Benki Piyãko",
+        },
+        {
+          page_id: 5882073,
+          creation_date: "2018-12-03",
+          title: "Célia Xakriabá",
+        },
+        {
+          page_id: 6977673,
+          creation_date: "2022-10-05",
+          title: "Chirley Pankará",
+        },
+        {
+          page_id: 7069044,
+          creation_date: "2023-02-16",
+          title: "Cristine Takuá",
+        },
+        {
+          page_id: 2119511,
+          creation_date: "2009-01-28",
+          title: "Eliane Potiguara",
+        },
+        {
+          page_id: 6714407,
+          creation_date: "2021-10-09",
+          title: "Jaider Esbell",
+        },
+        {
+          page_id: 6977117,
+          creation_date: "2022-10-04",
+          title: "Jerônimo Rodrigues",
+        },
+        {
+          page_id: 6935831,
+          creation_date: "2022-08-02",
+          title: "Nanblá Gakran",
+        },
+        {
+          page_id: 4908665,
+          creation_date: "2015-11-13",
+          title: "Sônia Guajajara",
+        },
+        {
+          page_id: 5886895,
+          creation_date: "2018-12-12",
+          title: "Vãngri Kaingáng",
+        },
+        {
+          page_id: 6549130,
+          creation_date: "2021-04-10",
+          title: "Zezico Guajajara",
+        },
+      ];
+
+      // Class that prints JSON metadata in a human legible format
+      class FormatJsonMetadata {
+        constructor(articleMetadata) {
+          this.articleMetadata = articleMetadata;
+        }
+
+        #formatDate(dateString) {
+          const [year, month, day] = dateString.split("-").map(Number);
+          const date = new Date(year, month - 1, day);
+          return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+
+        #formatArticle(metadata) {
+          const formattedDate = this.#formatDate(metadata.creation_date);
+          return `Article "${metadata.title}" (Page ID ${metadata.page_id}) was created at ${formattedDate}.`;
+        }
+
+        render(targetElementId) {
+          const container = document.getElementById(targetElementId);
+          const list = document.createElement("ol");
+          list.type = "A";
+
+          for (const metadata of this.articleMetadata) {
+            const item = document.createElement("li");
+            item.textContent = this.#formatArticle(metadata);
+            list.appendChild(item);
+          }
+
+          container.appendChild(list);
+        }
+      }
+
+      new FormatJsonMetadata(data).render("results");
+    </script>
+  </body>
+</html>
