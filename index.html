@@ -83,6 +83,7 @@
         }
 
         #formatDate(dateString) {
+          if (!dateString) return;
           const [year, month, day] = dateString.split("-").map(Number);
           const date = new Date(year, month - 1, day);
           return date.toLocaleDateString("en-US", {
@@ -93,12 +94,14 @@
         }
 
         #formatArticle(metadata) {
+          if (!metadata) return;
           const formattedDate = this.#formatDate(metadata.creation_date);
           return `Article "${metadata.title}" (Page ID ${metadata.page_id}) was created at ${formattedDate}.`;
         }
 
         render(targetElementId) {
           const container = document.getElementById(targetElementId);
+          if (!container) return;
           const list = document.createElement("ul");
           list.style.listStyle = "none";
 
@@ -112,7 +115,8 @@
         }
       }
 
-      new FormatJsonMetadata(data).render("results");
+      const formatedJSON = new FormatJsonMetadata(data);
+      formatedJSON.render("results");
     </script>
   </body>
 </html>
