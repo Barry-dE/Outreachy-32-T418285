@@ -1,4 +1,4 @@
-# Outreachy Task 1 — T418285
+# Outreachy Task 1 (T418285)
 
 **Program:** Outreachy Round 32  
 **Organization:** Wikimedia Foundation
