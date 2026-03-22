@@ -77,46 +77,46 @@
       ];
 
       // Class that prints JSON metadata in a human legible format
-      class FormatJsonMetadata {
-        constructor(articleMetadata) {
-          this.articleMetadata = articleMetadata;
+      class ArticleJSONMetadataFormatter {
+        #formatDate = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+        constructor(metadata) {
+          this.metadata = metadata || [];
         }
 
-        #formatDate(dateString) {
-          if (!dateString) return;
+        #formatDateString(dateString) {
+          if (!dateString) return "Date Invalid";
           const [year, month, day] = dateString.split("-").map(Number);
-          const date = new Date(year, month - 1, day);
-          return date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
+          return this.#formatDate.format(new Date(year, month - 1, day));
         }
 
-        #formatArticle(metadata) {
-          if (!metadata) return;
-          const formattedDate = this.#formatDate(metadata.creation_date);
-          return `Article "${metadata.title}" (Page ID ${metadata.page_id}) was created at ${formattedDate}.`;
+        #generateArticleTemplate(metadata) {
+          const formattedDate = this.#formatDateString(metadata.creation_date);
+          return `<li>Article "${metadata.title}" (Page ID ${metadata.page_id}) was created at ${formattedDate}.</li>`;
         }
 
         render(targetElementId) {
           const container = document.getElementById(targetElementId);
-          if (!container) return;
-          const list = document.createElement("ul");
-          list.style.listStyle = "none";
-
-          for (const metadata of this.articleMetadata) {
-            const item = document.createElement("li");
-            item.textContent = this.#formatArticle(metadata);
-            list.appendChild(item);
+          if (!container) {
+            console.error(
+              `Target element with id #${targetElementId} not found.`,
+            );
+            return;
           }
 
-          container.appendChild(list);
+          const listItems = this.metadata
+            .map((item) => this.#generateArticleTemplate(item))
+            .join("");
+
+          container.innerHTML = `<ul style="list-style: none; padding: 0;">${listItems}</ul>`;
         }
       }
 
-      const formatedJSON = new FormatJsonMetadata(data);
-      formatedJSON.render("results");
+      const formatter = new ArticleJSONMetadataFormatter(data);
+      formatter.render("results");
     </script>
   </body>
 </html>
