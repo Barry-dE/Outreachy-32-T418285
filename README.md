@@ -2,6 +2,7 @@
 
 **Program:** Outreachy Round 32  
 **Organization:** Wikimedia Foundation
+
 **Task:** Outreachy 32: Addressing the lusophone technological wishlist proposals - Create a JavaScript script to manipulate a json object and print it in a human legible format (T418285)
 
 ## What This Does
