@@ -11,3 +11,7 @@ Takes a JSON array of Wikipedia article metadata and renders each entry
 into a human-readable sentence inside an HTML page, like so:
 
 > Article "André Baniwa" (Page ID 6682420) was created at September 13, 2021.
+
+## Output
+
+![alt screenshot of the output of the script](Task-1.png)
